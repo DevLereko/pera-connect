@@ -3,7 +3,7 @@ import wallet from "../images/undraw_bitcoin_re_urgq.svg";
 import { PeraWalletConnect } from "@perawallet/connect";
 import { useEffect, useState } from "react";
 import React from "react";
-import { optInTransaction, firstTransaction } from "../global-utils/utils";
+import { optInTransaction } from "../global-utils/utils";
 import algosdk from "algosdk";
 
 const peraWallet = new PeraWalletConnect();
@@ -58,10 +58,6 @@ export default function Home() {
                 }
               >
                 Opt In
-              </Button>
-
-              <Button bgColor="teal.300" onClick={() => firstTransaction()}>
-                Sign In
               </Button>
             </>
           )}
