@@ -1,9 +1,17 @@
 import { Stack, Heading, Text, Img, Button } from "@chakra-ui/react";
-import wallet from "../../src/images/undraw_bitcoin_re_urgq.svg";
+import wallet from "../images/undraw_bitcoin_re_urgq.svg";
 import { PeraWalletConnect } from "@perawallet/connect";
 import { useEffect, useState } from "react";
+import React from "react";
+import { optInTransaction } from "../global-utils/utils";
+import algosdk from "algosdk";
 
 const peraWallet = new PeraWalletConnect();
+const algod = new algosdk.Algodv2(
+  "",
+  "https://node.testnet.algoexplorerapi.io/",
+  443
+);
 
 export default function Home() {
   const [accountAddress, setAccountAddress] = useState<any | null>(null);
@@ -31,7 +39,6 @@ export default function Home() {
           Wanna get connected to Pera Wallet? Do not worry we got you!
         </Text>
         <Stack direction={{ base: "column", md: "row" }} spacing={6}>
-          <Button bgColor="teal.300">Transactions</Button>
           <Button
             bgColor="none"
             onClick={
@@ -42,6 +49,18 @@ export default function Home() {
           >
             {isConnectedToPeraWallet ? "Disconnect" : "Connect to Pera Wallet"}
           </Button>
+          {isConnectedToPeraWallet && (
+            <>
+              <Button
+                bgColor="teal.300"
+                onClick={() =>
+                  optInTransaction(accountAddress, peraWallet, algod)
+                }
+              >
+                Opt In
+              </Button>
+            </>
+          )}
         </Stack>
       </Stack>
       <Stack p={5}>
